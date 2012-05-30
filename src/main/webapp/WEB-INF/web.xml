@@ -5,11 +5,21 @@
         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
         version="2.5">
     <!--<servlet>-->
-        <!--<servlet-name>Hello</servlet-name>-->
-        <!--<servlet-class>ru.spbstu.appmaths.knowledgetesting.HelloServlet</servlet-class>-->
+    <!--<servlet-name>Hello</servlet-name>-->
+    <!--<servlet-class>ru.spbstu.appmaths.knowledgetesting.HelloServlet</servlet-class>-->
     <!--</servlet>-->
     <!--<servlet-mapping>-->
-        <!--<servlet-name>Hello</servlet-name>-->
-        <!--<url-pattern>/hello/*</url-pattern>-->
+    <!--<servlet-name>Hello</servlet-name>-->
+    <!--<url-pattern>/hello/*</url-pattern>-->
     <!--</servlet-mapping>-->
+
+    <servlet>
+        <servlet-name>Authentication Servlet</servlet-name>
+        <servlet-class>ru.spbstu.appmaths.knowledgetesting.AuthenticationServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Authentication Servlet</servlet-name>
+        <url-pattern>/authentication/</url-pattern>
+    </servlet-mapping>
+
 </web-app>
