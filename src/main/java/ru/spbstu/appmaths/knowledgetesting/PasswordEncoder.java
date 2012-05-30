@@ -9,18 +9,6 @@ import java.security.NoSuchAlgorithmException;
  *         Date: 28.05.12
  */
 public class PasswordEncoder {
-    private static PasswordEncoder instance;
-
-    private PasswordEncoder() {
-    }
-
-    public static synchronized PasswordEncoder getInstance() {
-        if (instance == null) {
-            instance = new PasswordEncoder();
-        }
-        return instance;
-    }
-
     public String encodePassword(String password) {
         String encodedPassword = null;
         try {
@@ -37,6 +25,6 @@ public class PasswordEncoder {
 //    public static void main(String[] args) {
 //        PasswordEncoder passwordEncoder = PasswordEncoder.getInstance();
 //
-//        System.out.println(passwordEncoder.encodePassword("bla-bla"));
+//        System.out.println(passwordEncoder.encodePassword("test-passwordvfsvfdjvbhkvbhjkfvbhjskjhbfhvkjhsbhfkvjhsbhvkfbhskjfbvhfksjhdfbvhskjhfbvhkshjfbvhfksjhfbhvjksjhdfbvhjksjhdbfhvjksjhdfbhjvks"));
 //    }
 }

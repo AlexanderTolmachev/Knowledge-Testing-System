@@ -17,7 +17,7 @@ public class AuthenticationServlet extends HttpServlet {
         String userName = req.getParameter("username");
         String password = req.getParameter("password");
         String userType = req.getParameter("usertype");
-        String passwordHash = PasswordEncoder.getInstance().encodePassword(password);
+        String passwordHash = new PasswordEncoder().encodePassword(password);
 
         String dataBaseUrl = "jdbc:mysql://localhost/users";
 
