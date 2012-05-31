@@ -1,3 +1,5 @@
+<%@ page import="ru.spbstu.appmaths.knowledgetesting.TestManager" %>
+<%@ page import="java.util.List" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
  @author Alexander Tolmachev starlight@yandex-team.ru
@@ -18,9 +20,33 @@
 <div class="headers" align="center">
     <h1>Система автоматического <br/> тестирования знаний</h1>
 
-    <h2>Выбор теста</h2>
+    <h2>Выбор теста для авторизованных участников</h2>
 </div>
 
+<div class="test-selection-form" align="center">
+    <form action="" method="post">
+        <table>
+            <%
+                List<String> testNames = TestManager.getInstance().getAvailableTestNames();
+                for (String testName : testNames) {
+            %>
+            <tr>
+                <td>
+                    <input type="radio" name="testnames" value="<%=testName%>"/> <%=testName%> <br/>
+                </td>
+            </tr>
+            <%
+                }
+            %>
+
+            <tr>
+                <td>
+                    <input type="submit" value="Начать тестирование" name="submitbutton"/>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
 
 
 </body>

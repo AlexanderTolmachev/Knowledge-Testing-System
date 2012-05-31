@@ -1,8 +1,20 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page import="ru.spbstu.appmaths.knowledgetesting.RedirectManager" %>
 <%--
-  @author Alexander Tolmachev starlight@yandex-team.ru
-  Date: 31.05.12
- --%>
+ @author Alexander Tolmachev starlight@yandex-team.ru
+ Date: 31.05.12
+--%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<c:if test="${!empty username}">
+    <%
+        RedirectManager redirectManager = new RedirectManager();
+        String redirectUrl = redirectManager.getRedirectUrl(session);
+        response.sendRedirect(redirectUrl);
+    %>
+</c:if>
+
+
 <html>
 <head>
     <title>Система автоматического тестирования знаний – Регистрация преподавателя</title>
@@ -56,6 +68,9 @@
     </form>
 </div>
 
+<div class="plain-text" align="center">
+    <a href="index.jsp">На главную страницу</a>
+</div>
 
 </body>
 </html>

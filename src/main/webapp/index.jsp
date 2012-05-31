@@ -1,8 +1,20 @@
+<%@ page import="ru.spbstu.appmaths.knowledgetesting.RedirectManager" %>
+<%@ page import="org.apache.taglibs.standard.lang.jstl.test.PageContextImpl" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
-  @author Alexander Tolmachev starlight@yandex-team.ru
-  Date: 28.05.12
- --%>
+ @author Alexander Tolmachev starlight@yandex-team.ru
+ Date: 28.05.12
+--%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<c:if test="${!empty username}">
+    <%
+        RedirectManager redirectManager = new RedirectManager();
+        String redirectUrl = redirectManager.getRedirectUrl(session);
+        response.sendRedirect(redirectUrl);
+    %>
+</c:if>
+
 <html>
 <head>
     <title>Система автоматического тестирования знаний – Авторизация</title>

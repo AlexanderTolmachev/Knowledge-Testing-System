@@ -1,6 +1,8 @@
 package ru.spbstu.appmaths.knowledgetesting;
 
+import org.apache.commons.lang.StringEscapeUtils;
 import ru.spbstu.appmaths.knowledgetesting.exceptions.DataBaseDriverNotFoundException;
+import ru.spbstu.appmaths.knowledgetesting.util.PasswordEncoder;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -11,11 +13,12 @@ import java.sql.Statement;
  * @author Alexander Tolmachev starlight@yandex-team.ru
  *         Date: 30.05.12
  */
-public class AuthenticationManager extends DataBaseManager {
+public class SystemSecurityManager extends DataBaseManager {
     private static final String DATABASE_USERS_TABLE_NAME = "users";
     private static final String DATABASE_USER_NAME_COLUMN_NAME = "name";
     private static final String DATABASE_USER_TYPE_COLUMN_NAME = "usertype";
     private static final String DATABASE_USER_PASSWORD_HASH_COLUMN_NAME = "passwordhash";
+    private static final String TEACHER_REGISTRATION_SECURITY_PASSWORD = "RegSec777";
 
     private String buildGetUserByUserNameQuery(String userName) {
         StringBuilder queryBuilder = new StringBuilder();
@@ -51,12 +54,13 @@ public class AuthenticationManager extends DataBaseManager {
 
     public boolean authenticateUser(String userName, String userPassword, String userType)
             throws DataBaseDriverNotFoundException, SQLException {
+        String escapedUserName = StringEscapeUtils.escapeSql(StringEscapeUtils.escapeHtml(userName));
         String actualPasswordHash;
         String actualUserType;
 
         try {
             Connection connection = getDataBaseConnection();
-            String query = buildGetUserByUserNameQuery(userName);
+            String query = buildGetUserByUserNameQuery(escapedUserName);
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(query);
             if (!resultSet.next()) {
@@ -74,10 +78,11 @@ public class AuthenticationManager extends DataBaseManager {
 
     public boolean registerUser(String userName, String userPassword, String userType)
             throws DataBaseDriverNotFoundException, SQLException {
+        String escapedUserName = StringEscapeUtils.escapeSql(StringEscapeUtils.escapeHtml(userName));
 
         try {
             Connection connection = getDataBaseConnection();
-            String query = buildGetUserByUserNameQuery(userName);
+            String query = buildGetUserByUserNameQuery(escapedUserName);
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(query);
             if (resultSet.next()) {
@@ -85,7 +90,7 @@ public class AuthenticationManager extends DataBaseManager {
             }
 
             String userPasswordHash = new PasswordEncoder().encodePassword(userPassword);
-            query = buildAddUserQuery(userName, userPasswordHash, userType);
+            query = buildAddUserQuery(escapedUserName, userPasswordHash, userType);
             statement.executeUpdate(query);
         } catch (ClassNotFoundException e) {
             throw new DataBaseDriverNotFoundException(e);
@@ -94,9 +99,13 @@ public class AuthenticationManager extends DataBaseManager {
         return true;
     }
 
+    public boolean validateTeacherRegistrationSecurityPassword(String password) {
+        return password.equals(TEACHER_REGISTRATION_SECURITY_PASSWORD);
+    }
+
 //    public static void main(String[] args) {
-//        AuthenticationManager authenticationManager = new AuthenticationManager();
-//        String password = "test-password";
+//        SystemSecurityManager authenticationManager = new SystemSecurityManager();
+//        String password = "Test-password";
 //
 //        try {
 //            boolean isAuthenticated = authenticationManager.authenticateUser("testuser", password, "teacher");

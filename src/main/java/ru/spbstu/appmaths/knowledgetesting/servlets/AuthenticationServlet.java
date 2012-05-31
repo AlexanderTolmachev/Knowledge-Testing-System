@@ -1,9 +1,10 @@
 package ru.spbstu.appmaths.knowledgetesting.servlets;
 
-import ru.spbstu.appmaths.knowledgetesting.AuthenticationManager;
+import ru.spbstu.appmaths.knowledgetesting.SystemSecurityManager;
 import ru.spbstu.appmaths.knowledgetesting.RedirectManager;
 import ru.spbstu.appmaths.knowledgetesting.exceptions.DataBaseDriverNotFoundException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -31,24 +32,27 @@ public class AuthenticationServlet extends HttpServlet {
         String userPassword = request.getParameter("password");
         String userType = request.getParameter("usertype");
 
-        AuthenticationManager authenticationManager = new AuthenticationManager();
+        SystemSecurityManager systemSecurityManager = new SystemSecurityManager();
         boolean isUserAuthenticated;
         try {
-            isUserAuthenticated = authenticationManager.authenticateUser(userName, userPassword, userType);
+            isUserAuthenticated = systemSecurityManager.authenticateUser(userName, userPassword, userType);
         } catch (DataBaseDriverNotFoundException e) {
             String errorMessage = "Unable to connect to the database: " + e.getMessage();
             request.setAttribute("errorMessage", errorMessage);
-            response.sendRedirect("sysemerror.jsp");
+            RequestDispatcher requestDispatcher = request.getRequestDispatcher("systemerror.jsp");
+            requestDispatcher.forward(request, response);
             return;
         } catch (SQLException e) {
             String errorMessage = "SQL error happened: " + e.getMessage();
             request.setAttribute("errorMessage", errorMessage);
-            response.sendRedirect("sysemerror.jsp");
+            RequestDispatcher requestDispatcher = request.getRequestDispatcher("systemerror.jsp");
+            requestDispatcher.forward(request, response);
             return;
         }
 
         if (!isUserAuthenticated) {
-            response.sendRedirect("authorizationerror.jsp");
+            RequestDispatcher requestDispatcher = request.getRequestDispatcher("authorizationerror.jsp");
+            requestDispatcher.forward(request, response);
             return;
         }
 

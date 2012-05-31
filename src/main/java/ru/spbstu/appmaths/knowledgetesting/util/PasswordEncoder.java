@@ -1,4 +1,4 @@
-package ru.spbstu.appmaths.knowledgetesting;
+package ru.spbstu.appmaths.knowledgetesting.util;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
@@ -17,7 +17,7 @@ public class PasswordEncoder {
             BigInteger hash = new BigInteger(1, messageDigest.digest());
             encodedPassword = hash.toString(16);
         } catch (NoSuchAlgorithmException e) {
-
+            // ignore
         }
         return encodedPassword;
     }
@@ -25,6 +25,6 @@ public class PasswordEncoder {
 //    public static void main(String[] args) {
 //        PasswordEncoder passwordEncoder = PasswordEncoder.getInstance();
 //
-//        System.out.println(passwordEncoder.encodePassword("test-passwordvfsvfdjvbhkvbhjkfvbhjskjhbfhvkjhsbhfkvjhsbhvkfbhskjfbvhfksjhdfbvhskjhfbvhkshjfbvhfksjhfbhvjksjhdfbvhjksjhdbfhvjksjhdfbhjvks"));
+//        System.out.println(passwordEncoder.encodePassword("Test-passwordvfsvfdjvbhkvbhjkfvbhjskjhbfhvkjhsbhfkvjhsbhvkfbhskjfbvhfksjhdfbvhskjhfbvhkshjfbvhfksjhfbhvjksjhdfbvhjksjhdbfhvjksjhdfbhjvks"));
 //    }
 }
