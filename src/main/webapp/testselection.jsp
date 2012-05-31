@@ -15,19 +15,13 @@
     <a href="logout">Выход</a>
 </div>
 
-
 <div class="headers" align="center">
     <h1>Система автоматического <br/> тестирования знаний</h1>
 
-    <h2>Ожидание тестирования</h2>
+    <h2>Выбор теста</h2>
 </div>
 
-<div class="plain-text" align="center">
-    <p>
-        Здравствуйте, <c:out value="${username}"/>! <br/> <br/>
-        Пожалуйста, подождите, когда Ваш организатор тестирования выберет тест
-    </p>
-</div>
+
 
 </body>
 </html>

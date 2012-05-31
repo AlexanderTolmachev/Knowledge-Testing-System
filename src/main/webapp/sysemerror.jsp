@@ -20,7 +20,7 @@
 <div class="plain-text" align="center">
     <p>
         <c:out value="${errorMessage}"/> <br/>
-        <a href="/">На главную страницу</a>
+        <a href="index.jsp">На главную страницу</a>
     </p>
 </div>
 

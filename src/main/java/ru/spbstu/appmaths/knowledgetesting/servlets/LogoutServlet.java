@@ -1,22 +1,21 @@
-package ru.spbstu.appmaths.knowledgetesting;
+package ru.spbstu.appmaths.knowledgetesting.servlets;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 /**
  * @author Alexander Tolmachev starlight@yandex-team.ru
- *         Date: 21.05.12
+ *         Date: 31.05.12
  */
-
-
-public class HelloServlet extends HttpServlet {
+public class LogoutServlet extends HttpServlet {
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//        response.setContentType("text/html");
-//        response.setStatus(HttpServletResponse.SC_OK);
-//        response.getWriter().println("<h1>Hello Servlet</h1>");
-//        response.getWriter().println("session=" + request.getSession(true).getId());
+        HttpSession session = request.getSession();
+        session.invalidate();
+        response.sendRedirect("index.jsp");
     }
 }

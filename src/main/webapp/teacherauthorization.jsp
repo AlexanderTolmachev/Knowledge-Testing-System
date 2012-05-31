@@ -19,23 +19,33 @@
     <form action="authentication" method="post">
         <table>
             <tr>
-                <td>Логин:</td>
-                <td><input type="text" size="30" name="username"/>
+                <td>
+                    Логин: <br/>
+                    <input type="text" size="30" name="username"/>
+                </td>
             </tr>
             <tr>
-                <td>Пароль:</td>
-                <td><input type="password" size="30" name="password"/>
+                <td>
+                    Пароль: <br/>
+                    <input type="password" size="30" name="password"/>
+                </td>
             </tr>
             <tr>
-                <td></td>
-                <td><input type="hidden" value="teacher" name="usertype"/></td>
+                <td>
+                    <input type="hidden" value="teacher" name="usertype"/>
+                </td>
             </tr>
             <tr>
-                <td></td>
-                <td><input type="submit" value="Войти" name="submitbutton"/></td>
+                <td>
+                    <input type="submit" value="Войти" name="submitbutton"/>
+                </td>
             </tr>
         </table>
     </form>
+</div>
+
+<div class="plain-text" align="center">
+    <a href="teacherregistration.jsp">Регистрация преподавателя</a>
 </div>
 
 </body>
