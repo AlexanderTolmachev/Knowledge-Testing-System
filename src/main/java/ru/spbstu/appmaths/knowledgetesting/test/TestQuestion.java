@@ -12,12 +12,6 @@ public class TestQuestion {
     private List<String> options;
     private int answerOptionNumber;
 
-    public TestQuestion(String questionText, int answerOptionNumber) {
-        this.questionText = questionText;
-        this.options = new ArrayList<String>();
-        this.answerOptionNumber = answerOptionNumber;
-    }
-
     public TestQuestion(String questionText, List<String> options, int answerOptionNumber) {
         this.questionText = questionText;
         this.options = new ArrayList<String>(options);
@@ -42,9 +36,5 @@ public class TestQuestion {
 
     public String getOptionByIndex(int index) {
         return options.get(index);
-    }
-
-    public void addOption(String option) {
-        options.add(option);
     }
 }

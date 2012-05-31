@@ -1,5 +1,7 @@
 package ru.spbstu.appmaths.knowledgetesting;
 
+import ru.spbstu.appmaths.knowledgetesting.exceptions.DataBaseDriverNotFoundException;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -23,8 +25,12 @@ public class DataBaseManager {
         return connectionUrlBuilder.toString();
     }
 
-    protected Connection getDataBaseConnection() throws ClassNotFoundException, SQLException {
-        Class.forName(DATABASE_DRIVER_NAME);
+    protected Connection getDataBaseConnection() throws DataBaseDriverNotFoundException, SQLException {
+        try {
+            Class.forName(DATABASE_DRIVER_NAME);
+        } catch (ClassNotFoundException e) {
+            throw new DataBaseDriverNotFoundException(e);
+        }
         return DriverManager.getConnection(getDatabaseConnectionUrl(), DATABASE_USER_NAME, DATABASE_USER_PASSWORD);
     }
 

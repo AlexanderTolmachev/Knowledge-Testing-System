@@ -28,14 +28,27 @@
         <table>
             <%
                 List<String> testNames = TestManager.getInstance().getAvailableTestNames();
+                boolean isChecked = true;
                 for (String testName : testNames) {
             %>
             <tr>
                 <td>
-                    <input type="radio" name="testnames" value="<%=testName%>"/> <%=testName%> <br/>
+                    <%
+                        if (isChecked) {
+                    %>
+                    <input type="radio" name="testnames" value="<%=testName%>" checked=/> <%=testName%>
+                    <br/>
+                    <%
+                        } else {
+                    %>
+                    <input type="radio" name="testnames" value="<%=testName%>"/> <%=testName%>
+                    <%
+                        }
+                    %>
                 </td>
             </tr>
             <%
+                    isChecked = false;
                 }
             %>
 

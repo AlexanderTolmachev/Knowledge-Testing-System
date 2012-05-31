@@ -54,47 +54,34 @@ public class SystemSecurityManager extends DataBaseManager {
 
     public boolean authenticateUser(String userName, String userPassword, String userType)
             throws DataBaseDriverNotFoundException, SQLException {
+        Connection connection = getDataBaseConnection();
         String escapedUserName = StringEscapeUtils.escapeSql(StringEscapeUtils.escapeHtml(userName));
-        String actualPasswordHash;
-        String actualUserType;
-
-        try {
-            Connection connection = getDataBaseConnection();
-            String query = buildGetUserByUserNameQuery(escapedUserName);
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(query);
-            if (!resultSet.next()) {
-                return false;
-            }
-            actualPasswordHash = resultSet.getString(DATABASE_USER_PASSWORD_HASH_COLUMN_NAME);
-            actualUserType = resultSet.getString(DATABASE_USER_TYPE_COLUMN_NAME);
-        } catch (ClassNotFoundException e) {
-            throw new DataBaseDriverNotFoundException(e);
+        String query = buildGetUserByUserNameQuery(escapedUserName);
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery(query);
+        if (!resultSet.next()) {
+            return false;
         }
-
+        String actualPasswordHash = resultSet.getString(DATABASE_USER_PASSWORD_HASH_COLUMN_NAME);
+        String actualUserType = resultSet.getString(DATABASE_USER_TYPE_COLUMN_NAME);
         String userPasswordHash = new PasswordEncoder().encodePassword(userPassword);
+
         return userType.equals(actualUserType) && userPasswordHash.equals(actualPasswordHash);
     }
 
     public boolean registerUser(String userName, String userPassword, String userType)
             throws DataBaseDriverNotFoundException, SQLException {
+        Connection connection = getDataBaseConnection();
         String escapedUserName = StringEscapeUtils.escapeSql(StringEscapeUtils.escapeHtml(userName));
-
-        try {
-            Connection connection = getDataBaseConnection();
-            String query = buildGetUserByUserNameQuery(escapedUserName);
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(query);
-            if (resultSet.next()) {
-                return false;
-            }
-
-            String userPasswordHash = new PasswordEncoder().encodePassword(userPassword);
-            query = buildAddUserQuery(escapedUserName, userPasswordHash, userType);
-            statement.executeUpdate(query);
-        } catch (ClassNotFoundException e) {
-            throw new DataBaseDriverNotFoundException(e);
+        String query = buildGetUserByUserNameQuery(escapedUserName);
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery(query);
+        if (resultSet.next()) {
+            return false;
         }
+        String userPasswordHash = new PasswordEncoder().encodePassword(userPassword);
+        query = buildAddUserQuery(escapedUserName, userPasswordHash, userType);
+        statement.executeUpdate(query);
 
         return true;
     }

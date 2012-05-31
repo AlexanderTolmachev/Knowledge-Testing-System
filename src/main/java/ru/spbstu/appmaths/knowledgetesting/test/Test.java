@@ -11,10 +11,6 @@ public class Test {
     private String name;
     private List<TestQuestion> questions;
 
-    public Test(String name) {
-        this.name = name;
-        this.questions = new ArrayList<TestQuestion>();
-    }
 
     public Test(String name, List<TestQuestion> questions) {
         this.name = name;
@@ -35,9 +31,5 @@ public class Test {
 
     public TestQuestion getQuestionByIndex(int index) {
         return questions.get(index);
-    }
-
-    public void addQuestion(TestQuestion question) {
-        questions.add(question);
     }
 }
