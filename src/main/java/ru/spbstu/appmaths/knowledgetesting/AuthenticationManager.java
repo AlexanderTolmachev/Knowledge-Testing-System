@@ -17,11 +17,9 @@ public class AuthenticationManager extends DataBaseManager {
     private static final String DATABASE_USER_TYPE_COLUMN_NAME = "usertype";
     private static final String DATABASE_USER_PASSWORD_HASH_COLUMN_NAME = "passwordhash";
 
-    private String buildGetUserPasswordHashByUserNameQuery(String userName) {
+    private String buildGetUserByUserNameQuery(String userName) {
         StringBuilder queryBuilder = new StringBuilder();
-        queryBuilder.append("SELECT ");
-        queryBuilder.append(DATABASE_USER_PASSWORD_HASH_COLUMN_NAME);
-        queryBuilder.append(" FROM ");
+        queryBuilder.append("SELECT * FROM ");
         queryBuilder.append(DATABASE_USERS_TABLE_NAME);
         queryBuilder.append(" WHERE ");
         queryBuilder.append(DATABASE_USER_NAME_COLUMN_NAME);
@@ -53,23 +51,25 @@ public class AuthenticationManager extends DataBaseManager {
 
     public boolean authenticateUser(String userName, String userPassword, String userType)
             throws DataBaseDriverNotFoundException, SQLException {
-        String passwordHash;
+        String actualPasswordHash;
+        String actualUserType;
 
         try {
             Connection connection = getDataBaseConnection();
-            String query = buildGetUserPasswordHashByUserNameQuery(userName);
+            String query = buildGetUserByUserNameQuery(userName);
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(query);
             if (!resultSet.next()) {
                 return false;
             }
-            passwordHash = resultSet.getString(DATABASE_USER_PASSWORD_HASH_COLUMN_NAME);
+            actualPasswordHash = resultSet.getString(DATABASE_USER_PASSWORD_HASH_COLUMN_NAME);
+            actualUserType = resultSet.getString(DATABASE_USER_TYPE_COLUMN_NAME);
         } catch (ClassNotFoundException e) {
             throw new DataBaseDriverNotFoundException(e);
         }
 
         String userPasswordHash = new PasswordEncoder().encodePassword(userPassword);
-        return userPasswordHash.equals(passwordHash);
+        return userType.equals(actualUserType) && userPasswordHash.equals(actualPasswordHash);
     }
 
     public boolean registerUser(String userName, String userPassword, String userType)
@@ -77,7 +77,7 @@ public class AuthenticationManager extends DataBaseManager {
 
         try {
             Connection connection = getDataBaseConnection();
-            String query = buildGetUserPasswordHashByUserNameQuery(userName);
+            String query = buildGetUserByUserNameQuery(userName);
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(query);
             if (resultSet.next()) {

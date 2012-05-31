@@ -19,7 +19,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>Authentication Servlet</servlet-name>
-        <url-pattern>/authentication/</url-pattern>
+        <url-pattern>/authentication/*</url-pattern>
     </servlet-mapping>
 
 </web-app>

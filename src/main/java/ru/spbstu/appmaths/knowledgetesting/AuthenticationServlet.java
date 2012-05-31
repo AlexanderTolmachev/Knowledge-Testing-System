@@ -1,9 +1,13 @@
 package ru.spbstu.appmaths.knowledgetesting;
 
+import ru.spbstu.appmaths.knowledgetesting.exceptions.DataBaseDriverNotFoundException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.*;
 
@@ -15,30 +19,33 @@ public class AuthenticationServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String userName = req.getParameter("username");
-        String password = req.getParameter("password");
+        String userPassword = req.getParameter("password");
         String userType = req.getParameter("usertype");
-        String passwordHash = new PasswordEncoder().encodePassword(password);
 
-        String dataBaseUrl = "jdbc:mysql://localhost/users";
-
+        AuthenticationManager authenticationManager = new AuthenticationManager();
+        boolean isUserAuthenticated;
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection connection = DriverManager.getConnection(dataBaseUrl, "mysql", "");
-            String query = "select passwordhash from users where usertype = " + userType + " and username = " + userName;
-            Statement statement = connection.createStatement();
-            statement.executeQuery(query);
-            ResultSet resultSet = statement.getResultSet();
-            if (!resultSet.next()) {
-
-            }
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            isUserAuthenticated = authenticationManager.authenticateUser(userName, userPassword, userType);
+        } catch (DataBaseDriverNotFoundException e) {
+            String errorMessage = "Unable to connect to the database: " + e.getMessage();
+            req.setAttribute("errorMessage", errorMessage);
+            resp.sendRedirect("sysemerror.jsp");
             return;
         } catch (SQLException e) {
-            e.printStackTrace();
+            String errorMessage = "SQL error happened: " + e.getMessage();
+            req.setAttribute("errorMessage", errorMessage);
+            resp.sendRedirect("sysemerror.jsp");
             return;
         }
 
+        if (!isUserAuthenticated) {
+            resp.sendRedirect("authorizationerror.jsp");
+            return;
+        }
 
+        HttpSession session = req.getSession();
+        session.setAttribute("username", userName);
+        session.setAttribute("usertype", userType);
+        resp.sendRedirect("testwaiting.jsp");
     }
 }

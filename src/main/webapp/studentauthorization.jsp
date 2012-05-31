@@ -24,11 +24,11 @@
         <table>
             <tr>
                 <td>Логин:</td>
-                <td><input type="text" size="20" name="username"/>
+                <td><input type="text" size="30" name="username"/>
             </tr>
             <tr>
                 <td>Пароль:</td>
-                <td><input type="password" size="20" name="password"/>
+                <td><input type="password" size="30" name="password"/>
             </tr>
             <tr>
                 <td></td>
