@@ -3,6 +3,7 @@ package ru.spbstu.appmaths.knowledgetesting;
 import com.sun.tools.javac.util.Pair;
 import ru.spbstu.appmaths.knowledgetesting.exceptions.DataBaseDriverNotFoundException;
 import ru.spbstu.appmaths.knowledgetesting.exceptions.DataBaseException;
+import ru.spbstu.appmaths.knowledgetesting.exceptions.TestException;
 import ru.spbstu.appmaths.knowledgetesting.test.Test;
 import ru.spbstu.appmaths.knowledgetesting.test.TestQuestion;
 
@@ -49,9 +50,9 @@ public class TestManager extends DataBaseManager {
     private TestManager() {
     }
 
-    public synchronized Test getCurrentTest() {
+    public synchronized Test getCurrentTest() throws TestException{
         if (!isTestStarted) {
-            return null;
+            throw new TestException("Test is not started");
         }
         return currentTest;
     }
@@ -76,18 +77,18 @@ public class TestManager extends DataBaseManager {
     }
 
     public synchronized boolean startTest(String testName) throws SQLException,
-            DataBaseDriverNotFoundException, DataBaseException {
+            DataBaseDriverNotFoundException, DataBaseException, TestException {
         if (isTestStarted) {
-            return false;
+            throw new TestException("Test is started");
         }
         loadTest(testName);
         isTestStarted = true;
         return true;
     }
 
-    public synchronized boolean stopTest() {
+    public synchronized boolean stopTest() throws TestException{
         if (!isTestStarted) {
-            return false;
+            throw new TestException("Test is not started");
         }
         isTestStarted = false;
         return true;

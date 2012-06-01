@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Система автоматического тестирования знаний – Ожидание тестирования</title>
+    <title>Система автоматического тестирования знаний – Выбор теста</title>
 </head>
 <body>
 
@@ -37,7 +37,6 @@
                         if (isChecked) {
                     %>
                     <input type="radio" name="testnames" value="<%=testName%>" checked=/> <%=testName%>
-                    <br/>
                     <%
                         } else {
                     %>

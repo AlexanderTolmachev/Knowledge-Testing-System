@@ -12,11 +12,17 @@ public class RedirectManager {
             return "index.jsp";
         }
 
-        String userType = (String)httpSession.getAttribute("usertype");
+        String userType = (String) httpSession.getAttribute("usertype");
+        TestManager testManager = TestManager.getInstance();
         if ("teacher".equals(userType)) {
             return "testselection.jsp";
         } else {
-            return "testwaiting.jsp";
+            if (testManager.isTestStarted()) {
+                return "test.jsp";
+            } else {
+                return "testwaiting.jsp";
+            }
+
         }
     }
 }

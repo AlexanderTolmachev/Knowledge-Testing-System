@@ -26,15 +26,15 @@ public class TestQuestion {
         return options;
     }
 
-    public int getAnswerOptionNumber() {
-        return answerOptionNumber;
-    }
-
     public int getOptionsNumber() {
         return options.size();
     }
 
     public String getOptionByIndex(int index) {
         return options.get(index);
+    }
+
+    public String getRightAnswer() {
+        return options.get(answerOptionNumber);
     }
 }
