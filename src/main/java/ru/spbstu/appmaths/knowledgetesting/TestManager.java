@@ -11,8 +11,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author Alexander Tolmachev starlight@yandex-team.ru
@@ -39,7 +38,11 @@ public class TestManager extends DataBaseManager {
 
     private boolean isTestStarted;
     private boolean isTestFinished;
+    private boolean hasPreviousTest;
     private Test currentTest;
+    private Timer testCountDownTimer;
+    private Date testTime;
+    private Date startTime;
 
     public static synchronized TestManager getInstance() {
         if (instance == null) {
@@ -52,6 +55,7 @@ public class TestManager extends DataBaseManager {
         isTestStarted = false;
         isTestFinished = false;
         currentTest = null;
+        testCountDownTimer = null;
     }
 
     private TestManager() {
@@ -62,7 +66,7 @@ public class TestManager extends DataBaseManager {
         initialize();
     }
 
-    public synchronized Test getTest() throws TestException{
+    public synchronized Test getTest() throws TestException {
         return currentTest;
     }
 
@@ -70,8 +74,13 @@ public class TestManager extends DataBaseManager {
         return isTestStarted;
     }
 
-    public boolean isTestFinished() {
+    public synchronized boolean isTestFinished() {
         return isTestFinished;
+    }
+
+    public synchronized long getRemainingTestTime() {
+        long passedTime = new Date().getTime() - startTime.getTime();
+        return testTime.getTime() - passedTime;
     }
 
     public synchronized List<String> getAvailableTestNames() throws SQLException, DataBaseDriverNotFoundException {
@@ -89,7 +98,7 @@ public class TestManager extends DataBaseManager {
         return testNames;
     }
 
-    public synchronized boolean startTest(String testName) throws SQLException,
+    public synchronized void startTest(String testName, Date time) throws SQLException,
             DataBaseDriverNotFoundException, DataBaseException, TestException {
         if (isTestStarted) {
             throw new TestException("Test is started");
@@ -97,15 +106,18 @@ public class TestManager extends DataBaseManager {
         loadTest(testName);
         StudentManager.getInstance().initialize();
         isTestStarted = true;
-        return true;
+        testTime = time;
+        startTime = new Date();
+        testCountDownTimer = new Timer(true);
+        testCountDownTimer.schedule(new TestStopTask(), time.getTime());
     }
 
-    public synchronized boolean stopTest() throws TestException{
+    public synchronized void stopTest() throws TestException {
         if (!isTestStarted) {
             throw new TestException("Test is not started");
         }
         isTestFinished = true;
-        return true;
+        hasPreviousTest = true;
     }
 
     private void loadTest(String testName) throws SQLException, DataBaseDriverNotFoundException, DataBaseException {
@@ -261,6 +273,33 @@ public class TestManager extends DataBaseManager {
         }
         return testQuestions;
     }
+
+    private class TestStopTask extends TimerTask {
+        @Override
+        public void run() {
+            try {
+                TestManager.getInstance().stopTest();
+            } catch (TestException e) {
+                // ignore
+            }
+        }
+    }
+
+//    public static void main(String[] args) {
+//        Date date = new Date();
+//        System.out.println("date = " + date);
+//        System.out.println("date = " + date.getTime());
+//
+//        try {
+//            Thread.sleep(100);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+//        }
+//        Date newDate = new Date();
+//        System.out.println("date = " + newDate);
+//        System.out.println("date = " + newDate.getTime());
+//        System.out.println("newDate.getTime() - date.getTime()  = " + (newDate.getTime() - date.getTime()));
+//    }
 
 //    public static void main(String[] args) {
 //        TestManager testManager = TestManager.getInstance();

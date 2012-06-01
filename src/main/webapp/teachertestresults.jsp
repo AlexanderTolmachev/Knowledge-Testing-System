@@ -90,7 +90,3 @@
 
 </body>
 </html>
-
-<%
-    TestManager.getInstance().reset();
-%>

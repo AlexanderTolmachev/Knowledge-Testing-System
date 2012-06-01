@@ -3,6 +3,7 @@
 <%@ page import="ru.spbstu.appmaths.knowledgetesting.StudentManager" %>
 <%@ page import="java.util.List" %>
 <%@ page import="ru.spbstu.appmaths.knowledgetesting.RedirectManager" %>
+<%@ page import="ru.spbstu.appmaths.knowledgetesting.util.TimeConverter" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
  @author Alexander Tolmachev starlight@yandex-team.ru
@@ -29,6 +30,7 @@
 
 <html>
 <head>
+    <script type="text/javascript" src="javascript/timer.js"></script>
     <title>Система автоматического тестирования знаний – Прохождение теста</title>
 </head>
 <body>
@@ -54,7 +56,12 @@
             </tr>
             <tr>
                 <td>
-                    Время до окончания:
+                    <%
+                        long testRemainingTimeInMilliseconds = TestManager.getInstance().getRemainingTestTime();
+                        long [] testRemainingTime = new TimeConverter().convertMillisecondsToTime(testRemainingTimeInMilliseconds);
+                    %>
+                    Время до окончания: <div id="time"></div>
+                    <script type="text/javascript">countDownTimer(<%=testRemainingTime[0]%>, <%=testRemainingTime[1]%>, <%=testRemainingTime[2]%>, "time");</script>
                 </td>
             </tr>
             <tr>

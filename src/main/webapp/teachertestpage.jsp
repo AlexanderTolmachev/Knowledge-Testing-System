@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page import="ru.spbstu.appmaths.knowledgetesting.TestManager" %>
 <%@ page import="ru.spbstu.appmaths.knowledgetesting.RedirectManager" %>
+<%@ page import="ru.spbstu.appmaths.knowledgetesting.TestManager" %>
+<%@ page import="ru.spbstu.appmaths.knowledgetesting.util.TimeConverter" %>
 <%--
  @author Alexander Tolmachev starlight@yandex-team.ru
  Date: 01.06.12
@@ -19,6 +20,7 @@
 
 <html>
 <head>
+    <script type="text/javascript" src="javascript/timer.js"></script>
     <title>Система автоматического тестирования знаний – Проведение теста</title>
 </head>
 <body>
@@ -38,8 +40,14 @@
     <b>
         <p>
             Тест: <%=testName%> <br/>
-            Время до окончания: <br/>
         </p>
+        <%
+            long testRemainingTimeInMilliseconds = TestManager.getInstance().getRemainingTestTime();
+            long[] testRemainingTime = new TimeConverter().convertMillisecondsToTime(testRemainingTimeInMilliseconds);
+        %>
+        <p>Время до окончания: </p> <div id="time"></div>
+        <br/>
+        <script type="text/javascript">countDownTimer(<%=testRemainingTime[0]%>, <%=testRemainingTime[1]%>, <%=testRemainingTime[2]%>, "time");</script>
     </b>
 </div>
 <div class="test-stop-form" align="center">

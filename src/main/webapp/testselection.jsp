@@ -1,6 +1,6 @@
+<%@ page import="ru.spbstu.appmaths.knowledgetesting.RedirectManager" %>
 <%@ page import="ru.spbstu.appmaths.knowledgetesting.TestManager" %>
 <%@ page import="java.util.List" %>
-<%@ page import="ru.spbstu.appmaths.knowledgetesting.RedirectManager" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
  @author Alexander Tolmachev starlight@yandex-team.ru
@@ -47,7 +47,7 @@
                     %>
                     <input type="radio" name="testname" value="<%=testName%>" checked=/> <%=testName%>
                     <%
-                        } else {
+                    } else {
                     %>
                     <input type="radio" name="testname" value="<%=testName%>"/> <%=testName%>
                     <%
@@ -62,6 +62,34 @@
 
             <tr>
                 <td>
+                    <br/>
+                    Выберите время, отводимое на тестирование: <br/>
+                    <select name="timehours">
+                        <% for (int i = 0; i < 24; i++) {%>
+                        <option value="<%=i%>"><%=i%>
+                        </option>
+                        <%}%>
+                    </select>
+                    часов
+                    <select name="timeminutes">
+                        <% for (int i = 0; i < 60; i++) {%>
+                        <option value="<%=i%>"><%=i%>
+                        </option>
+                        <%}%>
+                    </select>
+                    минут
+                    <select name="timeseconds">
+                        <% for (int i = 0; i < 60; i++) {%>
+                        <option value="<%=i%>"><%=i%>
+                        </option>
+                        <%}%>
+                    </select>
+                    секунд
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <br/>
                     <input type="submit" value="Начать тестирование" name="submitbutton"/>
                 </td>
             </tr>
