@@ -38,6 +38,7 @@ public class TestManager extends DataBaseManager {
     private static TestManager instance;
 
     private boolean isTestStarted;
+    private boolean isTestFinished;
     private Test currentTest;
 
     public static synchronized TestManager getInstance() {
@@ -47,18 +48,30 @@ public class TestManager extends DataBaseManager {
         return instance;
     }
 
-    private TestManager() {
+    private void initialize() {
+        isTestStarted = false;
+        isTestFinished = false;
+        currentTest = null;
     }
 
-    public synchronized Test getCurrentTest() throws TestException{
-        if (!isTestStarted) {
-            throw new TestException("Test is not started");
-        }
+    private TestManager() {
+        initialize();
+    }
+
+    public void reset() {
+        initialize();
+    }
+
+    public synchronized Test getTest() throws TestException{
         return currentTest;
     }
 
     public synchronized boolean isTestStarted() {
         return isTestStarted;
+    }
+
+    public boolean isTestFinished() {
+        return isTestFinished;
     }
 
     public synchronized List<String> getAvailableTestNames() throws SQLException, DataBaseDriverNotFoundException {
@@ -82,6 +95,7 @@ public class TestManager extends DataBaseManager {
             throw new TestException("Test is started");
         }
         loadTest(testName);
+        StudentManager.getInstance().initialize();
         isTestStarted = true;
         return true;
     }
@@ -90,7 +104,7 @@ public class TestManager extends DataBaseManager {
         if (!isTestStarted) {
             throw new TestException("Test is not started");
         }
-        isTestStarted = false;
+        isTestFinished = true;
         return true;
     }
 
@@ -259,7 +273,7 @@ public class TestManager extends DataBaseManager {
 //        } catch (DataBaseException e) {
 //            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
 //        }
-//        Test test = testManager.getCurrentTest();
+//        Test test = testManager.getTest();
 //        System.out.println("test.getName() = " + test.getName());
 //        List<TestQuestion> testQuestions = test.getQuestions();
 //        for (TestQuestion testQuestion : testQuestions) {

@@ -2,6 +2,7 @@
 <%@ page import="ru.spbstu.appmaths.knowledgetesting.test.TestQuestion" %>
 <%@ page import="ru.spbstu.appmaths.knowledgetesting.StudentManager" %>
 <%@ page import="java.util.List" %>
+<%@ page import="ru.spbstu.appmaths.knowledgetesting.RedirectManager" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
  @author Alexander Tolmachev starlight@yandex-team.ru
@@ -10,17 +11,19 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%
+    RedirectManager redirectManager = new RedirectManager();
+    String redirectUrl = redirectManager.getRedirectUrl(session);
+    if (!redirectUrl.equals("test.jsp")) {
+        response.sendRedirect(redirectUrl);
+    }
+
     String userName = (String)session.getAttribute("username");
     TestManager testManager = TestManager.getInstance();
     StudentManager studentManager = StudentManager.getInstance();
 
-    if (!studentManager.hasStudentNextQuestion(userName)) {
-        response.sendRedirect("testresults.jsp");
-    }
-
-    String testName = testManager.getCurrentTest().getName();
-    int testQuestionsNumber = testManager.getCurrentTest().getQuestionsNumber();
-    int questionNumber = studentManager.getStudentCurrentQuestionNumber(userName);
+    String testName = testManager.getTest().getName();
+    int testQuestionsNumber = testManager.getTest().getQuestionsNumber();
+    int questionNumber = studentManager.getStudentCurrentQuestionNumber(userName) + 1;
     TestQuestion question = studentManager.getStudentCurrentQuestion(userName);
 %>
 
@@ -37,10 +40,12 @@
 
 <div class="headers" align="center">
     <h1>Система автоматического <br/> тестирования знаний</h1>
+
+    <h2>Прохождение тестирования</h2>
 </div>
 
 <div class="test-question-form" align="center">
-    <form action="" method="post">
+    <form action="handlereply" method="post">
         <table>
             <tr>
                 <td>
@@ -83,11 +88,11 @@
                     <%
                         if (isChecked) {
                     %>
-                    <input type="radio" name="options" value="<%=option%>" checked=/> <%=option%>
+                    <input type="radio" name="option" value="<%=option%>" checked=/> <%=option%>
                     <%
                         } else {
                     %>
-                    <input type="radio" name="options" value="<%=option%>"/> <%=option%>
+                    <input type="radio" name="option" value="<%=option%>"/> <%=option%>
                     <%
                         }
                     %>

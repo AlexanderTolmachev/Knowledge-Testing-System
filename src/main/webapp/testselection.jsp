@@ -1,11 +1,20 @@
 <%@ page import="ru.spbstu.appmaths.knowledgetesting.TestManager" %>
 <%@ page import="java.util.List" %>
+<%@ page import="ru.spbstu.appmaths.knowledgetesting.RedirectManager" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
  @author Alexander Tolmachev starlight@yandex-team.ru
  Date: 31.05.12
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    RedirectManager redirectManager = new RedirectManager();
+    String redirectUrl = redirectManager.getRedirectUrl(session);
+    if (!redirectUrl.equals("testselection.jsp")) {
+        response.sendRedirect(redirectUrl);
+    }
+%>
+
 <html>
 <head>
     <title>Система автоматического тестирования знаний – Выбор теста</title>
@@ -24,7 +33,7 @@
 </div>
 
 <div class="test-selection-form" align="center">
-    <form action="" method="post">
+    <form action="starttest" method="post">
         <table>
             <%
                 List<String> testNames = TestManager.getInstance().getAvailableTestNames();
@@ -36,11 +45,11 @@
                     <%
                         if (isChecked) {
                     %>
-                    <input type="radio" name="testnames" value="<%=testName%>" checked=/> <%=testName%>
+                    <input type="radio" name="testname" value="<%=testName%>" checked=/> <%=testName%>
                     <%
                         } else {
                     %>
-                    <input type="radio" name="testnames" value="<%=testName%>"/> <%=testName%>
+                    <input type="radio" name="testname" value="<%=testName%>"/> <%=testName%>
                     <%
                         }
                     %>

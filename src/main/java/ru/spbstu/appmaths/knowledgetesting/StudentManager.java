@@ -1,10 +1,10 @@
 package ru.spbstu.appmaths.knowledgetesting;
 
+import com.sun.tools.javac.util.Pair;
 import ru.spbstu.appmaths.knowledgetesting.exceptions.TestException;
 import ru.spbstu.appmaths.knowledgetesting.test.TestQuestion;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author Alexander Tolmachev starlight@yandex-team.ru
@@ -34,7 +34,7 @@ public class StudentManager {
     }
 
     private void initializeStudentTestInfo(String studentName) throws TestException {
-        int currentTestQuestionsNumber = testManager.getCurrentTest().getQuestionsNumber();
+        int currentTestQuestionsNumber = testManager.getTest().getQuestionsNumber();
         StudentTestInfo testInfo = new StudentTestInfo(currentTestQuestionsNumber);
         studentTestInfoMap.put(studentName, testInfo);
     }
@@ -53,7 +53,7 @@ public class StudentManager {
         checkStudentInitialization(studentName);
         StudentTestInfo testInfo = studentTestInfoMap.get(studentName);
         int studentCurrentQuestionNumber = testInfo.getCurrentQuestionNumber();
-        int currentTestQuestionsNumber = testManager.getCurrentTest().getQuestionsNumber();
+        int currentTestQuestionsNumber = testManager.getTest().getQuestionsNumber();
 
         return (studentCurrentQuestionNumber < currentTestQuestionsNumber);
     }
@@ -77,10 +77,10 @@ public class StudentManager {
         StudentTestInfo testInfo = studentTestInfoMap.get(studentName);
         int studentCurrentQuestionNumber = testInfo.getCurrentQuestionNumber();
 
-        return testManager.getCurrentTest().getQuestionByIndex(studentCurrentQuestionNumber);
+        return testManager.getTest().getQuestionByIndex(studentCurrentQuestionNumber);
     }
 
-    public synchronized void setStudentCurrentQuestionAnswer(String studentName, String answer) throws TestException {
+    public synchronized void handleStudentQuestionReply(String studentName, String reply) throws TestException {
         if (!testManager.isTestStarted()) {
             throw new TestException("Test is not started");
         }
@@ -89,7 +89,7 @@ public class StudentManager {
         StudentTestInfo testInfo = studentTestInfoMap.get(studentName);
         TestQuestion currentQuestion = getStudentCurrentQuestion(studentName);
         String rightAnswer = currentQuestion.getRightAnswer();
-        if (rightAnswer.equals(answer)) {
+        if (rightAnswer.equals(reply)) {
             testInfo.setCurrentAnswer(AnswerType.RIGHT);
         } else {
             testInfo.setCurrentAnswer(AnswerType.WRONG);
@@ -106,6 +106,27 @@ public class StudentManager {
         testInfo.setCurrentAnswer(AnswerType.SKIPPED);
     }
 
+    public StudentTestInfo getStudentTestInfo(String studentName) {
+        return studentTestInfoMap.get(studentName);
+    }
+
+    public List<Pair<String, StudentTestInfo>> getStudentsTestInfo() {
+        List<Pair<String, StudentTestInfo>> testInfo = new ArrayList<Pair<String, StudentTestInfo>>();
+        for (String studentName : studentTestInfoMap.keySet()) {
+            StudentTestInfo studentTestInfo = studentTestInfoMap.get(studentName);
+            testInfo.add(Pair.of(studentName, studentTestInfo));
+        }
+        Collections.sort(testInfo, new StudentTestInfoComparator());
+        return testInfo;
+    }
+
+    private class StudentTestInfoComparator implements Comparator<Pair<String, StudentTestInfo>> {
+        @Override
+        public int compare(Pair<String, StudentTestInfo> studentTestInfoPair,
+                           Pair<String, StudentTestInfo> anotherStudentTestInfoPair) {
+            return studentTestInfoPair.fst.compareToIgnoreCase(anotherStudentTestInfoPair.fst);
+        }
+    }
 //    public Map<String, StudentTestInfo> getStudentTestInfoMap() {
 //        return studentTestInfoMap;
 //    }

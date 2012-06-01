@@ -6,13 +6,13 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<c:if test="${!empty username}">
-    <%
-        RedirectManager redirectManager = new RedirectManager();
-        String redirectUrl = redirectManager.getRedirectUrl(session);
+<%
+    RedirectManager redirectManager = new RedirectManager();
+    String redirectUrl = redirectManager.getRedirectUrl(session);
+    if (!redirectUrl.equals("index.jsp")) {
         response.sendRedirect(redirectUrl);
-    %>
-</c:if>
+    }
+%>
 
 <html>
 <head>

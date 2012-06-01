@@ -32,4 +32,31 @@
         <url-pattern>/logout/*</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>Start Test Servlet</servlet-name>
+        <servlet-class>ru.spbstu.appmaths.knowledgetesting.servlets.StartTestServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Start Test Servlet</servlet-name>
+        <url-pattern>/starttest/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Stopt Test Servlet</servlet-name>
+        <servlet-class>ru.spbstu.appmaths.knowledgetesting.servlets.StopTestServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Stopt Test Servlet</servlet-name>
+        <url-pattern>/stoptest/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Question Reply Handler Servlet</servlet-name>
+        <servlet-class>ru.spbstu.appmaths.knowledgetesting.servlets.QuestionReplyHandlerServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Question Reply Handler Servlet</servlet-name>
+        <url-pattern>/handlereply/*</url-pattern>
+    </servlet-mapping>
+
 </web-app>

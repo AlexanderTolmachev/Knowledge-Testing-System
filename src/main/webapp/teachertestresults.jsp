@@ -1,9 +1,9 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="com.sun.tools.javac.util.Pair" %>
-<%@ page import="java.util.List" %>
 <%@ page import="ru.spbstu.appmaths.knowledgetesting.test.Test" %>
+<%@ page import="java.util.List" %>
 <%@ page import="ru.spbstu.appmaths.knowledgetesting.*" %>
 <%@ page import="java.util.Collections" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
  @author Alexander Tolmachev starlight@yandex-team.ru
  Date: 01.06.12
@@ -12,7 +12,7 @@
 <%
     RedirectManager redirectManager = new RedirectManager();
     String redirectUrl = redirectManager.getRedirectUrl(session);
-    if (!redirectUrl.equals("testresults.jsp")) {
+    if (!redirectUrl.equals("teachertestresults.jsp")) {
         response.sendRedirect(redirectUrl);
     }
 %>
@@ -35,8 +35,7 @@
 </div>
 
 <%
-    String userName = (String)session.getAttribute("username");
-    StudentTestInfo testInfo = StudentManager.getInstance().getStudentTestInfo(userName);
+    List<Pair<String, StudentTestInfo>> testInfo = StudentManager.getInstance().getStudentsTestInfo();
     Test test = TestManager.getInstance().getTest();
 %>
 
@@ -44,10 +43,11 @@
     Тест: <%=test.getName()%> <br/>  <br/>
 </div>
 
+
 <div class="test-results-table" align="center">
     <table border="1" cellpadding="5" cellspacing="2">
         <tr>
-            <td align="center"> # Вопроса </td>
+            <td> <br/> </td>
             <% for (int i = 1; i <= test.getQuestionsNumber(); i++) { %>
             <td align="center">
                 <%=i%>
@@ -55,10 +55,11 @@
             <% } %>
             <td align="center"> Количество правильных ответов</td>
         </tr>
+        <% for (Pair<String, StudentTestInfo> studentTestInfo : testInfo) { %>
         <tr>
-            <td align="center"> Ответ </td>
+            <td align="center"><%=studentTestInfo.fst%></td>
             <%
-                List<AnswerType> answers = testInfo.getAnswers();
+                List<AnswerType> answers = studentTestInfo.snd.getAnswers();
                 int rightAnswersNumber = Collections.frequency(answers, AnswerType.RIGHT);
                 for (AnswerType answer : answers) {
                     if (answer == AnswerType.RIGHT) {
@@ -78,6 +79,7 @@
             %>
             <td align="center"><%=rightAnswersNumber%></td>
         </tr>
+        <% } %>
     </table>
 </div>
 
@@ -88,3 +90,7 @@
 
 </body>
 </html>
+
+<%
+    TestManager.getInstance().reset();
+%>
