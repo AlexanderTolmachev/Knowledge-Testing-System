@@ -83,7 +83,7 @@
 
 <div class="plain-text" align="center">
     <br/>
-    <a href="<%=new RedirectManager().getRedirectUrl(session)%>">На главную страницу</a>
+    <a href="reset">На главную страницу</a>
 </div>
 
 </body>

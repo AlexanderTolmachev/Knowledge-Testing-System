@@ -4,6 +4,7 @@ function countDownTimer(hours, minutes, seconds, elem) {
     element.innerHTML = hours + ":" + minutes + ":" + seconds;
     if (hours == 0 && minutes == 0 && seconds < 1) {
         clearTimeout(timer);
+        element.setAttribute("value", "Посмотреть результат")
         location.reload();
     }
 

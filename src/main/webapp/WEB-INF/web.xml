@@ -59,4 +59,13 @@
         <url-pattern>/handlereply/*</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>Reset Test Servlet</servlet-name>
+        <servlet-class>ru.spbstu.appmaths.knowledgetesting.servlets.ResetTestServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Reset Test Servlet</servlet-name>
+        <url-pattern>/reset/*</url-pattern>
+    </servlet-mapping>
+
 </web-app>

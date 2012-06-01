@@ -21,6 +21,31 @@
 <html>
 <head>
     <script type="text/javascript" src="javascript/timer.js"></script>
+    <%--<script type="text/javascript">--%>
+        <%--function countDownTimer(hours, minutes, seconds, elem) {--%>
+            <%--var element = document.getElementById(elem);--%>
+            <%--element.innerHTML = hours + ":" + minutes + ":" + seconds;--%>
+            <%--if (hours == 0 && minutes == 0 && seconds < 1) {--%>
+                <%--clearTimeout(timer);--%>
+                <%--var submitButton = document.getElementById("submit");--%>
+                <%--submitButton.setAttribute("value", "Посмотреть результаты");--%>
+                <%--return;--%>
+            <%--}--%>
+
+            <%--if (seconds > 0) {--%>
+                <%--seconds--;--%>
+            <%--} else {--%>
+                <%--seconds = 59;--%>
+                <%--if (minutes > 0) {--%>
+                    <%--minutes--;--%>
+                <%--} else {--%>
+                    <%--minutes = 59;--%>
+                    <%--hours--;--%>
+                <%--}--%>
+            <%--}--%>
+            <%--var timer = setTimeout('countDownTimer('+hours+','+minutes+','+seconds+',"'+elem+'")',1000);--%>
+        <%--}--%>
+    <%--</script>--%>
     <title>Система автоматического тестирования знаний – Проведение теста</title>
 </head>
 <body>
@@ -55,7 +80,7 @@
         <table>
             <tr>
                 <td>
-                    <input type="submit" value="Завершить тестирование" name="submitbutton"/>
+                    <input id="submit" type="submit" value="Завершить тестирование" name="submitbutton"/>
                 </td>
             </tr>
         </table>

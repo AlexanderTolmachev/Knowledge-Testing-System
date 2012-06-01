@@ -18,6 +18,7 @@ public class RedirectManager {
         String userType = (String) httpSession.getAttribute("usertype");
         boolean isTestStarted = TestManager.getInstance().isTestStarted();
         boolean isTestFinished = TestManager.getInstance().isTestFinished();
+
         if ("teacher".equals(userType)) {
             if (isTestStarted) {
                 if (isTestFinished) {
