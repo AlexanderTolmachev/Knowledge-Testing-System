@@ -68,4 +68,22 @@
         <url-pattern>/reset/*</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>Is Test Started Servlet</servlet-name>
+        <servlet-class>ru.spbstu.appmaths.knowledgetesting.servlets.IsTestStartedServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Is Test Started Servlet</servlet-name>
+        <url-pattern>/isteststarted/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Is Test Finished Servlet</servlet-name>
+        <servlet-class>ru.spbstu.appmaths.knowledgetesting.servlets.IsTestFinishedServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Is Test Finished Servlet</servlet-name>
+        <url-pattern>/istestfinished/*</url-pattern>
+    </servlet-mapping>
+
 </web-app>

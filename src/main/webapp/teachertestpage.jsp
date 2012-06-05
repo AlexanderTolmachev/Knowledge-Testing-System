@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="ru.spbstu.appmaths.knowledgetesting.RedirectManager" %>
 <%@ page import="ru.spbstu.appmaths.knowledgetesting.TestManager" %>
-<%@ page import="ru.spbstu.appmaths.knowledgetesting.util.TimeConverter" %>
+<%@ page import="ru.spbstu.appmaths.knowledgetesting.utils.TimeConverter" %>
 <%--
  @author Alexander Tolmachev starlight@yandex-team.ru
  Date: 01.06.12
@@ -21,31 +21,6 @@
 <html>
 <head>
     <script type="text/javascript" src="javascript/timer.js"></script>
-    <%--<script type="text/javascript">--%>
-        <%--function countDownTimer(hours, minutes, seconds, elem) {--%>
-            <%--var element = document.getElementById(elem);--%>
-            <%--element.innerHTML = hours + ":" + minutes + ":" + seconds;--%>
-            <%--if (hours == 0 && minutes == 0 && seconds < 1) {--%>
-                <%--clearTimeout(timer);--%>
-                <%--var submitButton = document.getElementById("submit");--%>
-                <%--submitButton.setAttribute("value", "Посмотреть результаты");--%>
-                <%--return;--%>
-            <%--}--%>
-
-            <%--if (seconds > 0) {--%>
-                <%--seconds--;--%>
-            <%--} else {--%>
-                <%--seconds = 59;--%>
-                <%--if (minutes > 0) {--%>
-                    <%--minutes--;--%>
-                <%--} else {--%>
-                    <%--minutes = 59;--%>
-                    <%--hours--;--%>
-                <%--}--%>
-            <%--}--%>
-            <%--var timer = setTimeout('countDownTimer('+hours+','+minutes+','+seconds+',"'+elem+'")',1000);--%>
-        <%--}--%>
-    <%--</script>--%>
     <title>Система автоматического тестирования знаний – Проведение теста</title>
 </head>
 <body>
@@ -75,6 +50,7 @@
         <script type="text/javascript">countDownTimer(<%=testRemainingTime[0]%>, <%=testRemainingTime[1]%>, <%=testRemainingTime[2]%>, "time");</script>
     </b>
 </div>
+
 <div class="test-stop-form" align="center">
     <form action="stoptest" method="post">
         <table>

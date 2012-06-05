@@ -1,4 +1,4 @@
-package ru.spbstu.appmaths.knowledgetesting.util;
+package ru.spbstu.appmaths.knowledgetesting.utils;
 
 /**
  * @author Alexander Tolmachev starlight@yandex-team.ru

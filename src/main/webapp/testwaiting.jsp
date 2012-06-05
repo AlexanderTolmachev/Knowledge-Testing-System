@@ -16,8 +16,27 @@
 <html>
 <head>
     <title>Система автоматического тестирования знаний – Ожидание тестирования</title>
+    <script type="text/javascript" src="javascript/jquery.js"></script>
 </head>
 <body>
+
+<script type="text/javascript">
+    function checkIfTestIsStarted() {
+        $.ajax({type:"POST",
+            url:"isteststarted",
+            success:function (data) {
+                if ("true" == data) {
+                    location.reload();
+                }
+            }
+        });
+    }
+
+    $(document).ready(function () {
+        checkIfTestIsStarted();
+        setInterval('checkIfTestIsStarted()', 1000);
+    });
+</script>
 
 <div class="top-right-header" align="right">
     Пользователь: <c:out value="${username}"/> <br/>

@@ -1,10 +1,12 @@
 
+
+
 function countDownTimer(hours, minutes, seconds, elem) {
     var element = document.getElementById(elem);
     element.innerHTML = hours + ":" + minutes + ":" + seconds;
+
     if (hours == 0 && minutes == 0 && seconds < 1) {
         clearTimeout(timer);
-        element.setAttribute("value", "Посмотреть результат")
         location.reload();
     }
 
@@ -19,5 +21,6 @@ function countDownTimer(hours, minutes, seconds, elem) {
             hours--;
         }
     }
-    var timer = setTimeout('countDownTimer('+hours+','+minutes+','+seconds+',"'+elem+'")',1000);
+
+    var timer = setTimeout('countDownTimer('+hours+','+minutes+','+seconds+',"'+elem+'")', 1000);
 }

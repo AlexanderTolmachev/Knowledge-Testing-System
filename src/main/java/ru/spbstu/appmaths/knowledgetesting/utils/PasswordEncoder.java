@@ -1,4 +1,4 @@
-package ru.spbstu.appmaths.knowledgetesting.util;
+package ru.spbstu.appmaths.knowledgetesting.utils;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;

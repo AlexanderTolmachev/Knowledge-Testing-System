@@ -2,10 +2,7 @@ package ru.spbstu.appmaths.knowledgetesting.servlets;
 
 import ru.spbstu.appmaths.knowledgetesting.RedirectManager;
 import ru.spbstu.appmaths.knowledgetesting.TestManager;
-import ru.spbstu.appmaths.knowledgetesting.exceptions.DataBaseDriverNotFoundException;
-import ru.spbstu.appmaths.knowledgetesting.exceptions.DataBaseException;
-import ru.spbstu.appmaths.knowledgetesting.exceptions.TestException;
-import ru.spbstu.appmaths.knowledgetesting.util.TimeConverter;
+import ru.spbstu.appmaths.knowledgetesting.utils.TimeConverter;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;

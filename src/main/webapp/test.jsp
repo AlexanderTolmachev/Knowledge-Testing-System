@@ -3,7 +3,7 @@
 <%@ page import="ru.spbstu.appmaths.knowledgetesting.StudentManager" %>
 <%@ page import="java.util.List" %>
 <%@ page import="ru.spbstu.appmaths.knowledgetesting.RedirectManager" %>
-<%@ page import="ru.spbstu.appmaths.knowledgetesting.util.TimeConverter" %>
+<%@ page import="ru.spbstu.appmaths.knowledgetesting.utils.TimeConverter" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
  @author Alexander Tolmachev starlight@yandex-team.ru
@@ -31,9 +31,28 @@
 <html>
 <head>
     <script type="text/javascript" src="javascript/timer.js"></script>
+    <script type="text/javascript" src="javascript/jquery.js"></script>
     <title>Система автоматического тестирования знаний – Прохождение теста</title>
 </head>
 <body>
+
+<script type="text/javascript">
+    function checkIfTestIsFinished() {
+        $.ajax({type:"POST",
+            url:"istestfinished",
+            success:function (data) {
+                if ("true" == data) {
+                    location.reload();
+                }
+            }
+        });
+    }
+
+    $(document).ready(function () {
+        checkIfTestIsFinished();
+        setInterval('checkIfTestIsFinished()', 1000);
+    });
+</script>
 
 <div class="top-right-header" align="right">
     Пользователь: <c:out value="${username}"/> <br/>

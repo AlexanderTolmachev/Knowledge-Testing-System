@@ -2,7 +2,7 @@ package ru.spbstu.appmaths.knowledgetesting;
 
 import org.apache.commons.lang.StringEscapeUtils;
 import ru.spbstu.appmaths.knowledgetesting.exceptions.DataBaseDriverNotFoundException;
-import ru.spbstu.appmaths.knowledgetesting.util.PasswordEncoder;
+import ru.spbstu.appmaths.knowledgetesting.utils.PasswordEncoder;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
