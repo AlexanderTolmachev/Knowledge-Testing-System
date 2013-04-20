@@ -90,35 +90,4 @@ public class SystemSecurityManager extends DataBaseManager {
         return password.equals(TEACHER_REGISTRATION_SECURITY_PASSWORD);
     }
 
-//    public static void main(String[] args) {
-//        SystemSecurityManager authenticationManager = new SystemSecurityManager();
-//        String password = "Test-password";
-//
-//        try {
-//            boolean isAuthenticated = authenticationManager.authenticateUser("testuser", password, "teacher");
-//            System.out.println("isAuthenticated = " + isAuthenticated);
-//        } catch (DataBaseDriverNotFoundException e) {
-//            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-//        } catch (SQLException e) {
-//            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-//        }
-//
-//        String userName = "auto_added_user";
-//        password = "p@ssw0rd";
-//        String userType = "student";
-//
-//        try {
-//            boolean isAdded = authenticationManager.registerUser(userName, password, userType);
-//            System.out.println("isAded = " + isAdded);
-//            boolean isAuthenticated = authenticationManager.authenticateUser(userName, password, userType);
-//            System.out.println("isAuthenticated = " + isAuthenticated);
-//            isAdded = authenticationManager.registerUser(userName, password, userType);
-//            System.out.println("isAded = " + isAdded);
-//        } catch (DataBaseDriverNotFoundException e) {
-//            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-//        } catch (SQLException e) {
-//            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-//        }
-//
-//    }
 }

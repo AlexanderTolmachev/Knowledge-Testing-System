@@ -127,19 +127,4 @@ public class StudentManager {
             return studentTestInfoPair.fst.compareToIgnoreCase(anotherStudentTestInfoPair.fst);
         }
     }
-//    public Map<String, StudentTestInfo> getStudentTestInfoMap() {
-//        return studentTestInfoMap;
-//    }
-//    public static void main(String[] args) {
-//        StudentManager studentsManager = StudentManager.getInstance();
-//        studentsManager.initialize();
-//        Map<String, StudentTestInfo> stringStudentTestInfoMap = studentsManager.getStudentTestInfoMap();
-//        StudentTestInfo testInfo = new StudentTestInfo(10);
-//        stringStudentTestInfoMap.put("abc", testInfo);
-//        StudentTestInfo info = stringStudentTestInfoMap.get("abc");
-//        System.out.println("info.getCurrentQuestionNumber() = " + info.getCurrentQuestionNumber());
-//        info.setCurrentAnswer(AnswerType.RIGHT);
-//        testInfo = stringStudentTestInfoMap.get("abc");
-//        System.out.println("info.getCurrentQuestionNumber() = " + info.getCurrentQuestionNumber());
-//    }
 }
