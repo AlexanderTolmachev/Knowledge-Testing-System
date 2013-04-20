@@ -284,46 +284,4 @@ public class TestManager extends DataBaseManager {
             }
         }
     }
-
-//    public static void main(String[] args) {
-//        Date date = new Date();
-//        System.out.println("date = " + date);
-//        System.out.println("date = " + date.getTime());
-//
-//        try {
-//            Thread.sleep(100);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-//        }
-//        Date newDate = new Date();
-//        System.out.println("date = " + newDate);
-//        System.out.println("date = " + newDate.getTime());
-//        System.out.println("newDate.getTime() - date.getTime()  = " + (newDate.getTime() - date.getTime()));
-//    }
-
-//    public static void main(String[] args) {
-//        TestManager testManager = TestManager.getInstance();
-//        try {
-//            testManager.startTest("Simple test about Java");
-//        } catch (SQLException e) {
-//            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-//        } catch (DataBaseDriverNotFoundException e) {
-//            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-//        } catch (DataBaseException e) {
-//            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-//        }
-//        Test test = testManager.getTest();
-//        System.out.println("test.getName() = " + test.getName());
-//        List<TestQuestion> testQuestions = test.getQuestions();
-//        for (TestQuestion testQuestion : testQuestions) {
-//            System.out.println("testQuestion.getQuestionText() = " + testQuestion.getQuestionText());
-//            List<String> options = testQuestion.getOptions();
-//            for (String option : options) {
-//                System.out.println("option = " + option);
-//            }
-//            System.out.println("testQuestion.getAnswerOptionNumber() = " + testQuestion.getAnswerOptionNumber());
-//        }
-//
-//        testManager.stopTest();
-//    }
 }
