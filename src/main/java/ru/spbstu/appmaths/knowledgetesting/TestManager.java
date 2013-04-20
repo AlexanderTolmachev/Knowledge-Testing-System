@@ -83,7 +83,7 @@ public class TestManager extends DataBaseManager {
         return testTime.getTime() - passedTime;
     }
 
-    public synchronized List<String> getAvailableTestNames() throws SQLException, DataBaseDriverNotFoundException {
+    public List<String> getAvailableTestNames() throws SQLException, DataBaseDriverNotFoundException {
         Connection connection = getDataBaseConnection();
         String query = buildGetAllTestNamesQuery();
         Statement statement = connection.createStatement();
